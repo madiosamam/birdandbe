@@ -135,6 +135,8 @@ table.t td.num,table.t th.num{text-align:right;font-variant-numeric:tabular-nums
 .lp .nav .logo{height:34px;width:auto}
 .lp .nav .logo-text{font:500 34px/1 var(--serif);color:#2F5468;letter-spacing:-.02em}
 .lp .nav nav{display:flex;gap:24px;font-size:15px}
+.lp .nav nav a{text-decoration:none;color:var(--bb-navy)}
+.lp .nav nav a:hover{text-decoration:underline;text-underline-offset:4px}
 .lp .nav .grow{flex:1}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:999px;padding:15px 28px;font:600 15px/1 var(--sans);text-decoration:none;border:0;cursor:pointer}
 .btn.navy{background:var(--bb-navy);color:#fff}
@@ -202,7 +204,8 @@ table.t td.num,table.t th.num{text-align:right;font-variant-numeric:tabular-nums
 .lp .timeline span{font-size:14.5px;line-height:1.5;opacity:.9;display:block;margin-top:8px}
 
 .lp .products{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:34px}
-.lp .prod{background:#fff;border-radius:18px;overflow:hidden;display:flex;flex-direction:column}
+.lp .prod{background:#fff;border-radius:18px;overflow:hidden;display:flex;flex-direction:column;color:inherit;text-decoration:none;transition:transform .2s,box-shadow .2s}
+.lp .prod:hover{transform:translateY(-3px);box-shadow:0 10px 24px rgba(0,28,54,.1)}
 .lp .prod .ph{aspect-ratio:1/1;background:#f2efe8;overflow:hidden}
 .lp .prod .ph img{width:100%;height:100%;object-fit:cover}
 .lp .prod .b{padding:16px 18px 20px;display:flex;flex-direction:column;gap:6px;flex:1}
@@ -258,7 +261,8 @@ table.t td.num,table.t th.num{text-align:right;font-variant-numeric:tabular-nums
 .post .linkbar{display:flex;align-items:center;justify-content:space-between;gap:10px;background:#f0f2f5;padding:12px 16px}
 .post .linkbar small{display:block;font-size:11.5px;color:#555;letter-spacing:.03em;text-transform:uppercase}
 .post .linkbar b{display:block;font-size:14px;line-height:1.3}
-.post .linkbar span.cta{flex:none;background:#e2e5e9;border-radius:6px;padding:9px 12px;font:600 13px var(--ui)}
+.post .linkbar .cta{flex:none;background:#e2e5e9;border-radius:6px;padding:9px 12px;font:600 13px var(--ui);color:#111;text-decoration:none;transition:background .15s}
+.post .linkbar .cta:hover{background:#d4d8dd}
 
 .creative{--r:1/1;aspect-ratio:var(--r);position:relative;overflow:hidden;container-type:size;background:var(--bb-cream);color:var(--bb-navy);font-family:var(--sans)}
 .feed[data-r="45"] .creative{--r:4/5}
