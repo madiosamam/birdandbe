@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex,nofollow">
 <title>Write-up: 20 a day · Danilo x Bird&amp;Be</title>
-<meta name="description" content="How one Bird&amp;Be set was made with Claude Code, measured step by step, and how to scale it to 20 sets a day.">
+<meta name="description" content="How one Bird&amp;Be set was made with Claude Code, measured step by step, and how to scale it toward 20 sets a day.">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Write-up: 20 a day">
-<meta property="og:description" content="How one Bird&amp;Be set was made with Claude Code, measured step by step, and how to scale it to 20 sets a day.">
+<meta property="og:description" content="How one Bird&amp;Be set was made with Claude Code, measured step by step, and how to scale it toward 20 sets a day.">
 <meta property="og:url" content="https://madiosamam.github.io/birdandbe/scale.html">
 <meta property="og:image" content="https://madiosamam.github.io/birdandbe/img/og-cover.jpg">
 <meta property="og:image:width" content="1200">
@@ -58,7 +58,7 @@
   <div class="big-n">
     <div><b>~36 min</b><span>wall-clock for this set, from “start research” to a QA’d site (research ran in parallel with the build)</span></div>
     <div><b>~15 min</b><span>of human time a set, once the kit exists: pick, review, approve (estimate)</span></div>
-    <div><b>12–15 / day</b><span>what I’d promise on one Claude Max account at this quality today. 20 is reachable with the changes in section 4</span></div>
+    <div><b>10+ / day</b><span>what I’d commit to on one Claude Max account at this quality, from the start. More as the fixes in section 4 land; 20 only once the usage meter shows it holds</span></div>
   </div>
 
   <h2>1. What this set actually took (measured)</h2>
@@ -88,7 +88,7 @@
     <li><b>A second, independent fact-check.</b> After the first QA, a separate agent re-read every line of the set against the dossier, the product data and the timing log. It found 6 errors the first pass missed: the creator ramp and weekly ad counts didn’t match between tabs, a monthly figure labelled as one week, a $0.01 rounding error, an accuracy claim attached to the wrong test, and step times in this write-up that didn’t match my own log. It also found about a dozen smaller issues: two reviewers labelled “Verified buyer” where the site says “Anonymous”, two reviews from a pregnancy product on a pre-conception page, and wording that went beyond what Bird&amp;Be states about its quiz. A click-through found one navigation bug. All fixed before sending. <b>Rule from this:</b> the fact-check runs as its own step, by an agent that didn’t write the set.</li>
   </ul>
 
-  <h2>3. The pipeline for 20 a day</h2>
+  <h2>3. The pipeline, and what 20 a day would take</h2>
   <div class="flow">
     <div class="h"><b>1 · Pick</b>Weekly list of ~120 funded brands, scored; human approves 20/day (2 min each)</div>
     <div><b>2 · Research</b>Sub-agent per brand, 4 at a time → dossier + images (~20 min)</div>
@@ -103,7 +103,7 @@
     <tr><td>Funding scan, research dossier, image download, page build, ad rendering in 3 sizes, claim linting, screenshots, deploy</td><td>Approving the brand list · reviewing each set (~10 min) · fixing what the checks flag · anything sensitive (health claims, tone)</td></tr>
   </table>
   </div>
-  <p><b>What runs in parallel:</b> research for sets N+1…N+4 runs while set N is being built and reviewed. With 4 in flight, 20 sets is about 4–5 hours of machine time. Human time is about 20 × 15 min = 5 hours, so the day is one operator’s full shift.</p>
+  <p><b>What runs in parallel:</b> research for sets N+1…N+4 runs while set N is being built and reviewed. With 4 in flight, 20 sets would be about 4–5 hours of machine time. Human time would be about 20 × 15 min = 5 hours, a full shift for one operator.</p>
 
   <h2>4. Where Claude’s limits hit, and the fix</h2>
   <ul>
@@ -113,7 +113,7 @@
     <li><b>Fix 3: freeze the kit.</b> The shell, CSS and 12 ad layouts are written once; each set only writes brand-specific content.</li>
   </ul>
   <p>All three fixes stay inside Claude Code: Claude writes the collection scripts, runs them, and picks the model for each sub-agent. None of them needs a paid tool.</p>
-  <div class="callout"><b>Honest number:</b> on one Max account with no changes, I’d expect the usage windows to cap this at roughly 12–15 sets a day at this quality. With fixes 1–3, 20 a day is realistic on the same account, and the limit moves to human review time. I’d confirm both numbers with the usage meter on your account on day one; the per-set token figures above are from this run, the daily caps are my estimate.</div>
+  <div class="callout"><b>Honest number:</b> on one Max account I’d commit to at least 10 sets a day at this quality, from the start. Fixes 1–3 should push that higher. I won’t promise 20 until the usage meter on your account shows it holds without lowering quality. The per-set token figures above are from this run; the daily numbers are my estimate.</div>
 
   <h2>5. Tools: $0 of the $200</h2>
   <p>This whole set was made with Claude Code alone, plus free tools already on the machine. The pipeline above needs nothing else.</p>
@@ -128,7 +128,7 @@
   </div>
   <p><b>Held in reserve, bought only if the day-one numbers ask for it:</b></p>
   <ul>
-    <li><b>Codex ($20)</b> for the mechanical build steps, only if the usage meter shows Claude alone stops short of 20 a day.</li>
+    <li><b>Codex ($20)</b> for the mechanical build steps, only if the usage meter shows Claude alone can’t keep up with the daily target.</li>
     <li><b>A scraper like Apify (~$49)</b> for the Meta Ad Library, only if Claude can’t read it in a real browser. My agent’s plain fetch got a 403; Claude in Chrome is the next thing I’d try, at no cost.</li>
   </ul>
 
