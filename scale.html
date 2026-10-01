@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Write-up: 20 a day · Danilo x Bird&amp;Be</title>
+<meta name="description" content="How one Bird&amp;Be set was made with Claude Code, measured step by step, and how to scale it to 20 sets a day.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Write-up: 20 a day">
+<meta property="og:description" content="How one Bird&amp;Be set was made with Claude Code, measured step by step, and how to scale it to 20 sets a day.">
+<meta property="og:url" content="https://madiosamam.github.io/birdandbe/scale.html">
+<meta property="og:image" content="https://madiosamam.github.io/birdandbe/img/og-cover.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 64 64%27%3E%3Crect width=%2764%27 height=%2764%27 rx=%2714%27 fill=%27%23151515%27/%3E%3Ctext x=%2732%27 y=%2744%27 font-family=%27Georgia,serif%27 font-size=%2734%27 fill=%27%23ffffff%27 text-anchor=%27middle%27%3EB%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,500;1,6..72,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css?v=10">
+<style>
+  .doc h2{font:700 21px/1.3 var(--ui);margin:36px 0 10px}
+  .doc h1 em{font-family:var(--serif);font-weight:500}
+  .big-n{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:20px 0}
+  .big-n div{border:1px solid var(--line);border-radius:12px;padding:16px}
+  .big-n b{display:block;font:600 30px/1.1 var(--serif);color:var(--bb-navy)}
+  .big-n span{font-size:13.5px;color:var(--muted);line-height:1.4;display:block;margin-top:6px}
+  .flow{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin:14px 0}
+  .flow div{background:#f6f6f3;border:1px solid var(--line);border-radius:10px;padding:10px;font-size:13px;line-height:1.35}
+  .flow b{display:block;font-size:13.5px;margin-bottom:4px}
+  .flow .h{background:#fff6cf;border-color:#eadb95}
+  .callout{background:#f3f7f5;border-left:3px solid var(--bb-teal);padding:14px 18px;border-radius:0 10px 10px 0;margin:16px 0}
+  @media (max-width:760px){.big-n{grid-template-columns:1fr}.flow{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+<div class="meta-bar"><span class="pill">Screening task</span><span>Built by <b>Osama</b> for Danilo’s review, in Danilo’s format. A draft, not sent to Bird&amp;Be.</span></div>
+
+<header class="topbar">
+  <nav class="tabs" aria-label="Sections">
+    <a class="tab" href="index.html#application">Danilo x Bird&amp;Be</a>
+    <a class="tab" href="index.html#landing">Landing page</a>
+    <a class="tab" href="index.html#ads">Ad concepts</a>
+    <a class="tab" href="index.html#growth">Growth plan</a>
+    <a class="tab" href="index.html#creators">Creator engine</a>
+    <a class="tab" href="index.html#claims">Claims sheet</a>
+    <span class="divider" aria-hidden="true"></span>
+    <a class="tab doc-tab active" href="scale.html" aria-current="page"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" aria-hidden="true"><path d="M4 1.5h5.5L13 5v9.5H4z"/><path d="M9.5 1.5V5H13M6.5 8.5h4M6.5 11h4"/></svg>Write-up: 20 a day</a>
+  </nav>
+  <a class="chat" href="index.html#chat">Let's chat</a>
+</header>
+
+<article class="doc">
+  <h1>20 a day: <em>what one set really took, and how I’d scale it</em></h1>
+  <p class="byline">Osama · screening task for Danilo · 1 Oct 2026 · every number below is either measured on this run or marked as an estimate</p>
+
+  <div class="big-n">
+    <div><b>~36 min</b><span>wall-clock for this set, from “start research” to a QA’d site (research ran in parallel with the build)</span></div>
+    <div><b>~15 min</b><span>of human time a set, once the kit exists: pick, review, approve (estimate)</span></div>
+    <div><b>12–15 / day</b><span>what I’d promise on one Claude Max account at this quality today. 20 is reachable with the changes in section 4</span></div>
+  </div>
+
+  <h2>1. What this set actually took (measured)</h2>
+  <div class="table-scroll">
+  <table class="t">
+    <tr><th>Step</th><th class="num">Wall-clock</th><th>Who</th><th>Notes</th></tr>
+    <tr><td>Brand pick: scan ~120 consumer rounds (Jun–Sep 2026), verify 6, pick 1</td><td class="num">~10 min (not timed)</td><td>Claude + me (1 min decision)</td><td>At volume this becomes a weekly batch, not a per-set step</td></tr>
+    <tr><td>Research dossier: products, prices, reviews, doses, claims, colours, fonts, funding, socials, 21 images</td><td class="num">21.5 min</td><td>Claude sub-agent, in parallel</td><td>Measured: <b>290K tokens, 110 tool calls</b>. Heaviest step</td></tr>
+    <tr><td>Design study + shell + CSS (tabs, ad layouts, plan pages)</td><td class="num">8 min</td><td>Claude</td><td>Reusable for every future set</td></tr>
+    <tr><td>Application, growth plan, creator engine, 12 ads, claims sheet</td><td class="num">10 min</td><td>Claude</td><td>Written while research was still running</td></tr>
+    <tr><td>Landing page</td><td class="num">2–3 min</td><td>Claude</td><td>Built from the brand’s live product data</td></tr>
+    <tr><td>Fill with dossier facts + corrections</td><td class="num">2 min</td><td>Claude</td><td>Real reviews, founder story, doses; 2 errors fixed (below)</td></tr>
+    <tr><td>QA: headless screenshots of every tab, 3 ad sizes, mobile</td><td class="num">10 min</td><td>Script (19 s) + Claude fixes</td><td>Found 4 layout issues; all fixed</td></tr>
+    <tr><td><b>Total to a QA’d set</b></td><td class="num"><b>~36 min</b></td><td></td><td>Plus this write-up and deploy</td></tr>
+    <tr><td>Independent fact-check pass (added after the first QA)</td><td class="num">~4 min</td><td>Second Claude agent</td><td>Measured: <b>188K tokens</b>. Found what’s listed in section 2</td></tr>
+  </table>
+  </div>
+  <p class="note">From my timing log (timestamps on every step). The first set includes building the kit (shell, CSS, 12 ad layouts, QA script), so later sets should be faster on the build side; research time doesn’t shrink by itself. The research agent’s tokens are measured; the build ran inside my main session, so I’m not quoting a separate token number for it.</p>
+
+  <h2>2. How bad output got caught on this run</h2>
+  <ul>
+    <li><b>Template bleed.</b> I wrote “2-minute quiz” in 7 places out of habit from the Golden Child set. Bird&amp;Be says “five minutes”. Caught when the dossier came in. <b>Rule from this:</b> build only from the brand’s dossier, never from the previous set, and run a claim check that flags any number not found in the dossier.</li>
+    <li><b>Ingredient error.</b> I put NAC in both packs; the facts panel lists it only in hers. Same check.</li>
+    <li><b>The brand’s own inconsistencies</b> were caught by the research step: “52.5%” on product pages vs “52.2%” in Bird&amp;Be’s study release; NAC in the male bullets but not in the facts panel. These went on the claims sheet as “hold until fixed”. This is the kind of thing a client notices first.</li>
+    <li><b>Visual QA</b> (screenshots, not eyeballing): cropped product shots, chips stretching full width, two-column sections not stacking on mobile, an ad whose product photo didn’t work split in half.</li>
+    <li><b>Compliance:</b> testimonials that describe getting pregnant were deliberately excluded (fertility is a sensitive, Meta-restricted category).</li>
+    <li><b>A second, independent fact-check.</b> After the first QA, a separate agent re-read every line of the set against the dossier, the product data and the timing log. It found 6 errors the first pass missed: the creator ramp and weekly ad counts didn’t match between tabs, a monthly figure labelled as one week, a $0.01 rounding error, an accuracy claim attached to the wrong test, and step times in this write-up that didn’t match my own log. It also found about a dozen smaller issues: two reviewers labelled “Verified buyer” where the site says “Anonymous”, two reviews from a pregnancy product on a pre-conception page, and wording that went beyond what Bird&amp;Be states about its quiz. A click-through found one navigation bug. All fixed before sending. <b>Rule from this:</b> the fact-check runs as its own step, by an agent that didn’t write the set.</li>
+  </ul>
+
+  <h2>3. The pipeline for 20 a day</h2>
+  <div class="flow">
+    <div class="h"><b>1 · Pick</b>Weekly list of ~120 funded brands, scored; human approves 20/day (2 min each)</div>
+    <div><b>2 · Research</b>Sub-agent per brand, 4 at a time → dossier + images (~20 min)</div>
+    <div><b>3 · Build</b>Agent fills the kit from the dossier only (~15 min)</div>
+    <div><b>4 · Check</b>Fact-check agent vs dossier + screenshot QA (~5 min, automated)</div>
+    <div class="h"><b>5 · Review</b>Human: tone, brand fit, anything flagged (~10 min)</div>
+    <div><b>6 · Ship</b>Deploy script → brand.danilovicioso.com (~1 min)</div>
+  </div>
+  <div class="table-scroll">
+  <table class="t">
+    <tr><th>Automated</th><th>Human</th></tr>
+    <tr><td>Funding scan, research dossier, image download, page build, ad rendering in 3 sizes, claim linting, screenshots, deploy</td><td>Approving the brand list · reviewing each set (~10 min) · fixing what the checks flag · anything sensitive (health claims, tone)</td></tr>
+  </table>
+  </div>
+  <p><b>What runs in parallel:</b> research for sets N+1…N+4 runs while set N is being built and reviewed. With 4 in flight, 20 sets is about 4–5 hours of machine time. Human time is about 20 × 15 min = 5 hours, so the day is one operator’s full shift.</p>
+
+  <h2>4. Where Claude’s limits hit, and the fix</h2>
+  <ul>
+    <li><b>Research is the expensive step.</b> One dossier used 290K tokens and 110 tool calls, mostly the model reading raw HTML; the fact-check pass used another 188K. At 20 a day that’s about 5.8M tokens on research alone, and it eats the 5-hour and weekly windows first.</li>
+    <li><b>Fix 1: scripts before the model.</b> Shopify <code>products.json</code>, Judge.me/Okendo review widgets, JSON-LD ratings and theme colours can be pulled by a plain script and handed to Claude as clean JSON. I’d expect this to cut research tokens by more than half (estimate; I’d measure it in week one).</li>
+    <li><b>Fix 2: a smaller model for collection and checking, the big model for writing.</b> Sub-agents that fetch, extract and compare lines against the dossier don’t need the top model.</li>
+    <li><b>Fix 3: freeze the kit.</b> The shell, CSS and 12 ad layouts are written once; each set only writes brand-specific content.</li>
+  </ul>
+  <p>All three fixes stay inside Claude Code: Claude writes the collection scripts, runs them, and picks the model for each sub-agent. None of them needs a paid tool.</p>
+  <div class="callout"><b>Honest number:</b> on one Max account with no changes, I’d expect the usage windows to cap this at roughly 12–15 sets a day at this quality. With fixes 1–3, 20 a day is realistic on the same account, and the limit moves to human review time. I’d confirm both numbers with the usage meter on your account on day one; the per-set token figures above are from this run, the daily caps are my estimate.</div>
+
+  <h2>5. Tools: $0 of the $200</h2>
+  <p>This whole set was made with Claude Code alone, plus free tools already on the machine. The pipeline above needs nothing else.</p>
+  <div class="table-scroll">
+  <table class="t">
+    <tr><th>Tool</th><th class="num">Cost / month</th><th>Why</th></tr>
+    <tr><td>Claude Code Max (yours)</td><td class="num">included</td><td>Everything: brand scan, research agents, writing, building, claim check, and running the QA and deploy scripts</td></tr>
+    <tr><td>Headless Chrome</td><td class="num">$0</td><td>Screenshot QA in all 3 ad sizes (used on this run)</td></tr>
+    <tr><td>Hosting (wherever danilovicioso.com lives, or a free tier like Cloudflare Pages)</td><td class="num">$0</td><td>One subdomain per brand, deployed by script</td></tr>
+    <tr><td><b>Total</b></td><td class="num"><b>$0</b></td><td>The $200 stays unspent unless day one shows a need</td></tr>
+  </table>
+  </div>
+  <p><b>Held in reserve, bought only if the day-one numbers ask for it:</b></p>
+  <ul>
+    <li><b>Codex ($20)</b> for the mechanical build steps, only if the usage meter shows Claude alone stops short of 20 a day.</li>
+    <li><b>A scraper like Apify (~$49)</b> for the Meta Ad Library, only if Claude can’t read it in a real browser. My agent’s plain fetch got a 403; Claude in Chrome is the next thing I’d try, at no cost.</li>
+  </ul>
+
+  <h2>6. What I’d do on day one</h2>
+  <ul>
+    <li>Turn this set into the kit: dossier spec, build prompt, claim linter, QA script, deploy script.</li>
+    <li>Run 4 brands in parallel and log tokens and minutes per step, like the table above.</li>
+    <li>Read the usage meter after each batch, so the daily cap is a measured number by the end of day one, not a guess.</li>
+  </ul>
+  <p class="note">Built with Claude Code. Brand facts in the set are from birdandbe.com and public coverage, read 1 Oct 2026; the set is an unofficial concept, not affiliated with Bird&amp;Be.</p>
+</article>
+<script>{const f=()=>{const s=document.querySelector(".topbar .tabs"),t=s&&s.querySelector(".tab.active");if(t)s.scrollLeft=t.offsetLeft-(s.clientWidth-t.offsetWidth)/2;};f();document.fonts&&document.fonts.ready.then(f);}</script>
+</body>
+</html>
